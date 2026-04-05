@@ -92,7 +92,7 @@ cd $BUILD_DIR
 rm -rf pulseaudio-module-xrdp
 
 # 1. Use git clone instead of wget to avoid gzip/404 errors
-git clone https://github.com
+git clone https://github.com/neutrinolabs/pulseaudio-module-xrdp.git
 cd pulseaudio-module-xrdp
 
 # 2. Skip the broken script that looks for /etc/apt/sources.list
