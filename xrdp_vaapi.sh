@@ -87,16 +87,19 @@ make -j $((`nproc` - 1)) clean all
 sudo make install
 
 # Pulseaudio xrdp module
+PULSE_MODULE_VER="0.8"  # Use the actual latest release version
 cd $BUILD_DIR
-# Delete old attempts if they exist
-rm -rf pulseaudio-module-xrdp
-# Clone the latest code instead of using wget
-git clone https://github.com
-cd pulseaudio-module-xrdp
+wget https://github.com \
+  -O pulseaudio-module-xrdp.tar.gz
+tar xvzf pulseaudio-module-xrdp.tar.gz
+rm pulseaudio-module-xrdp.tar.gz
+cd pulseaudio-module-xrdp-$PULSE_MODULE_VER
 
-# (Keep these lines as we discussed)
+# Comment out the line that tries to use the old /etc/apt/sources.list
 # ./scripts/install_pulseaudio_sources_apt.sh -d $BUILD_DIR/pulseaudio.src
+
 ./bootstrap
+# Use the manual 'pulse' folder you set up with 'apt-get source'
 ./configure PULSE_DIR=$BUILD_DIR/pulseaudio.src/pulse
 make
 sudo make install
