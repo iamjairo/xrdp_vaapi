@@ -86,17 +86,21 @@ cd "$BUILD_DIR/xorgxrdp"
 make -j $((`nproc` - 1)) clean all
 sudo make install
 
-#Pulseaudio xrdp module
-PULSE_MODULE_VER="0.7"
+# Pulseaudio xrdp module
+PULSE_MODULE_VER="0.9.1"  # Updated for better compatibility with PA 17
 cd $BUILD_DIR
 wget https://github.com/neutrinolabs/pulseaudio-module-xrdp/archive/v$PULSE_MODULE_VER.tar.gz \
   -O pulseaudio-module-xrdp.tar.gz
 tar xvzf pulseaudio-module-xrdp.tar.gz
 rm pulseaudio-module-xrdp.tar.gz
 cd pulseaudio-module-xrdp-$PULSE_MODULE_VER
-./scripts/install_pulseaudio_sources_apt.sh -d $BUILD_DIR/pulseaudio.src
+
+# Comment out the line that tries to use the old /etc/apt/sources.list
+# ./scripts/install_pulseaudio_sources_apt.sh -d $BUILD_DIR/pulseaudio.src
+
 ./bootstrap
-./configure PULSE_DIR=$BUILD_DIR/pulseaudio.src
+# Point directly to the 'pulse' folder you manually created earlier
+./configure PULSE_DIR=$BUILD_DIR/pulseaudio.src/pulse
 make
 sudo make install
 
